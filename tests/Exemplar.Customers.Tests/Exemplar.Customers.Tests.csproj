@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net8.0</TargetFramework>
+    <TargetFramework>net10.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <IsPackable>false</IsPackable>
@@ -15,7 +15,7 @@
     <PackageReference Include="NSubstitute" Version="*" />
     <PackageReference Include="coverlet.collector" Version="*" />
     <PackageReference Include="Testcontainers.PostgreSql" Version="*" />
-    <PackageReference Include="Microsoft.AspNetCore.TestHost" Version="8.*" />
+    <PackageReference Include="Microsoft.AspNetCore.TestHost" Version="10.*" />
   </ItemGroup>
 
   <ItemGroup>

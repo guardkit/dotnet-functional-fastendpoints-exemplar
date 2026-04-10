@@ -1,5 +1,5 @@
 # ── Stage 1: Build ────────────────────────────────────────────────────────────
-FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
+FROM mcr.microsoft.com/dotnet/sdk:10.0 AS build
 WORKDIR /src
 
 # Copy solution and project files first to maximise Docker layer caching.
@@ -10,6 +10,7 @@ COPY src/Exemplar.Core/Exemplar.Core.csproj                             src/Exem
 COPY src/Exemplar.Customers.Contracts/Exemplar.Customers.Contracts.csproj src/Exemplar.Customers.Contracts/
 COPY src/Exemplar.Customers/Exemplar.Customers.csproj                   src/Exemplar.Customers/
 COPY src/Exemplar.Addresses/Exemplar.Addresses.csproj                   src/Exemplar.Addresses/
+COPY src/Exemplar.Fleet/Exemplar.Fleet.csproj                           src/Exemplar.Fleet/
 COPY src/Exemplar.API/Exemplar.API.csproj                               src/Exemplar.API/
 
 COPY tests/Exemplar.Core.Tests/Exemplar.Core.Tests.csproj               tests/Exemplar.Core.Tests/
@@ -26,7 +27,7 @@ RUN dotnet publish "src/Exemplar.API/Exemplar.API.csproj" \
     --output /app/publish
 
 # ── Stage 2: Runtime ──────────────────────────────────────────────────────────
-FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS runtime
+FROM mcr.microsoft.com/dotnet/aspnet:10.0 AS runtime
 WORKDIR /app
 
 # Non-root user for container security.
