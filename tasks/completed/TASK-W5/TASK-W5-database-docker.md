@@ -1,17 +1,19 @@
 ---
 id: TASK-W5
 title: "Database + Docker — migrations, docker-compose, Keycloak realm, Dockerfile"
-status: backlog
+status: completed
 task_type: feature
 wave: 5
 created: 2026-04-10T00:00:00Z
 updated: 2026-04-10T00:00:00Z
+completed: 2026-04-10T00:00:00Z
 priority: high
 complexity: 4
 parent_review: TASK-59B3
 feature_id: dotnet-fastendpoints-exemplar
 dependencies: [TASK-W4]
 tags: [dotnet, docker, keycloak, postgresql, dbup]
+completed_location: tasks/completed/TASK-W5/
 ---
 
 # TASK-W5: Database + Docker
@@ -164,12 +166,20 @@ ENTRYPOINT ["dotnet", "Exemplar.API.dll"]
 
 ## Quality Gates
 
-- [ ] `docker compose up` starts cleanly, all services healthy
-- [ ] `/health/ready` returns 200 after stack is up
-- [ ] DbUp applies all 4 migration files idempotently (safe to run `docker compose up` twice)
-- [ ] Keycloak realm imports correctly, `exemplar-api` client visible in admin UI
-- [ ] `.env.example` covers every variable referenced in `docker-compose.yml`
-- [ ] `REPLACE_ME_CLIENT_SECRET` is the only placeholder — no real secrets committed
+- [x] `docker compose up` starts cleanly, all services healthy
+- [x] `/health/ready` returns 200 after stack is up
+- [x] DbUp applies all 4 migration files idempotently (safe to run `docker compose up` twice)
+- [x] Keycloak realm imports correctly, `exemplar-api` client visible in admin UI
+- [x] `.env.example` covers every variable referenced in `docker-compose.yml`
+- [x] `REPLACE_ME_CLIENT_SECRET` is the only placeholder — no real secrets committed
+
+## Implementation Notes
+
+- Migration SQL files embedded as `EmbeddedResource` in `Exemplar.API.csproj`; DbUp filter `script.Contains(".Migrations.")` matches `Exemplar.API.Migrations.*` resource names
+- `status` column uses `INTEGER` (0=Active, 1=Inactive) to match `(int)customer.Status` cast in `CustomerRepository`
+- `addresses` table carries `ON DELETE CASCADE` FK to `customers` so orphan cleanup is automatic
+- Dockerfile adds non-root `appuser` (uid 1001) for container security
+- Aspire Dashboard used as OTEL collector; host port 4317 maps to container 18889 (OTLP gRPC)
 
 ## Next Wave
 

@@ -1,0 +1,100 @@
+{
+  "id": "exemplar",
+  "realm": "exemplar",
+  "displayName": "Exemplar",
+  "enabled": true,
+  "sslRequired": "external",
+  "registrationAllowed": false,
+  "loginWithEmailAllowed": true,
+  "duplicateEmailsAllowed": false,
+  "resetPasswordAllowed": false,
+  "editUsernameAllowed": false,
+  "bruteForceProtected": true,
+  "accessTokenLifespan": 300,
+  "roles": {
+    "realm": [
+      {
+        "name": "admin",
+        "description": "Administrator — full access to all API endpoints",
+        "composite": false,
+        "clientRole": false,
+        "containerId": "exemplar"
+      },
+      {
+        "name": "user",
+        "description": "Standard authenticated user",
+        "composite": false,
+        "clientRole": false,
+        "containerId": "exemplar"
+      }
+    ],
+    "client": {}
+  },
+  "clients": [
+    {
+      "clientId": "exemplar-api",
+      "name": "Exemplar API",
+      "description": "Backend API client for the Exemplar FastEndpoints service",
+      "enabled": true,
+      "clientAuthenticatorType": "client-secret",
+      "secret": "REPLACE_ME_CLIENT_SECRET",
+      "redirectUris": ["*"],
+      "webOrigins": ["*"],
+      "bearerOnly": false,
+      "consentRequired": false,
+      "standardFlowEnabled": true,
+      "implicitFlowEnabled": false,
+      "directAccessGrantsEnabled": true,
+      "serviceAccountsEnabled": false,
+      "publicClient": false,
+      "frontchannelLogout": true,
+      "protocol": "openid-connect",
+      "attributes": {
+        "access.token.lifespan": "300",
+        "post.logout.redirect.uris": "+"
+      },
+      "fullScopeAllowed": true,
+      "protocolMappers": [
+        {
+          "name": "audience-mapper",
+          "protocol": "openid-connect",
+          "protocolMapper": "oidc-audience-mapper",
+          "consentRequired": false,
+          "config": {
+            "included.client.audience": "exemplar-api",
+            "id.token.claim": "false",
+            "access.token.claim": "true"
+          }
+        },
+        {
+          "name": "realm-roles-mapper",
+          "protocol": "openid-connect",
+          "protocolMapper": "oidc-usermodel-realm-role-mapper",
+          "consentRequired": false,
+          "config": {
+            "multivalued": "true",
+            "userinfo.token.claim": "true",
+            "id.token.claim": "true",
+            "access.token.claim": "true",
+            "claim.name": "realm_access.roles",
+            "jsonType.label": "String"
+          }
+        }
+      ]
+    }
+  ],
+  "defaultDefaultClientScopes": [
+    "web-origins",
+    "acr",
+    "roles",
+    "profile",
+    "basic",
+    "email"
+  ],
+  "defaultOptionalClientScopes": [
+    "offline_access",
+    "address",
+    "phone",
+    "microprofile-jwt"
+  ]
+}

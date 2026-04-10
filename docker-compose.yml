@@ -1,0 +1,73 @@
+services:
+
+  # ── API ────────────────────────────────────────────────────────────────────
+  api:
+    build: .
+    ports:
+      - "5000:8080"
+    environment:
+      - ConnectionStrings__DefaultConnection=${DB_CONNECTION_STRING}
+      - Authentication__Authority=${KEYCLOAK_AUTHORITY}
+      - Authentication__Audience=${KEYCLOAK_CLIENT_ID}
+      - Authentication__ClientId=${KEYCLOAK_CLIENT_ID}
+      - OpenTelemetry__Endpoint=${OTEL_ENDPOINT}
+      - OTEL_EXPORTER_OTLP_ENDPOINT=${OTEL_ENDPOINT}
+    depends_on:
+      postgres:
+        condition: service_healthy
+      keycloak:
+        condition: service_healthy
+    restart: unless-stopped
+
+  # ── PostgreSQL 16 ──────────────────────────────────────────────────────────
+  postgres:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_DB:       ${POSTGRES_DB}
+      POSTGRES_USER:     ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    restart: unless-stopped
+
+  # ── Keycloak 26.4 ──────────────────────────────────────────────────────────
+  keycloak:
+    image: quay.io/keycloak/keycloak:26.4
+    command: start-dev --import-realm
+    environment:
+      KC_BOOTSTRAP_ADMIN_USERNAME: admin
+      KC_BOOTSTRAP_ADMIN_PASSWORD: ${KEYCLOAK_ADMIN_PASSWORD}
+    volumes:
+      - ./keycloak/exemplar-realm.json:/opt/keycloak/data/import/exemplar-realm.json:ro
+    ports:
+      - "8080:8080"
+    healthcheck:
+      test:
+        - "CMD-SHELL"
+        - "curl -sf http://localhost:8080/realms/exemplar/.well-known/openid-configuration || exit 1"
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 30s
+    restart: unless-stopped
+
+  # ── OTEL Collector (Aspire Dashboard) ──────────────────────────────────────
+  # Aspire Dashboard acts as both a lightweight OTLP collector and a UI.
+  # Traces, metrics, and logs are visible at http://localhost:18888.
+  otel-collector:
+    image: mcr.microsoft.com/dotnet/aspire-dashboard:latest
+    ports:
+      - "18888:18888"   # Aspire Dashboard UI
+      - "4317:18889"    # OTLP gRPC  (maps host 4317 → container 18889)
+      - "4318:18890"    # OTLP HTTP  (maps host 4318 → container 18890)
+    restart: unless-stopped
+
+volumes:
+  postgres_data:

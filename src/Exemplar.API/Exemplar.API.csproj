@@ -9,6 +9,11 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <!-- Embed SQL migration scripts so DbUp can discover them from the assembly -->
+    <EmbeddedResource Include="Migrations\*.sql" />
+  </ItemGroup>
+
+  <ItemGroup>
     <!-- Authentication — pinned to 8.x to stay on net8.0 framework -->
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="8.*" />
 
