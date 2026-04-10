@@ -1,11 +1,13 @@
 ---
 id: TASK-W7
 title: "NATS Fleet Integration — capability discovery, domain events, request-reply with AI agents"
-status: backlog
+status: completed
 task_type: feature
 wave: 7
 created: 2026-04-10T00:00:00Z
 updated: 2026-04-10T00:00:00Z
+completed: 2026-04-10T00:00:00Z
+completed_location: tasks/completed/TASK-W7/
 priority: high
 complexity: 6
 parent_review: TASK-59B3

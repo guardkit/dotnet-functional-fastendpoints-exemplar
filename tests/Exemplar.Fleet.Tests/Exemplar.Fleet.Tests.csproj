@@ -1,0 +1,26 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <IsPackable>false</IsPackable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="*" />
+    <PackageReference Include="xunit" Version="*" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="*" />
+    <PackageReference Include="FluentAssertions" Version="7.*" />
+    <PackageReference Include="NSubstitute" Version="*" />
+    <PackageReference Include="coverlet.collector" Version="*" />
+    <!-- Generic Testcontainers for NATS integration tests -->
+    <PackageReference Include="Testcontainers" Version="*" />
+    <!-- Microsoft.Extensions.* arrive transitively via Exemplar.Fleet → Exemplar.Core -->
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\Exemplar.Fleet\Exemplar.Fleet.csproj" />
+  </ItemGroup>
+
+</Project>

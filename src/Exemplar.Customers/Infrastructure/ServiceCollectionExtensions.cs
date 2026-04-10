@@ -1,5 +1,6 @@
 using Exemplar.Customers.Application;
 using Exemplar.Customers.Contracts;
+using Exemplar.Fleet.Services;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -11,6 +12,10 @@ public static class CustomersServiceCollectionExtensions
     /// Registers all Customers BC services.
     /// CustomerService is registered as both ICustomerService and ICustomerLookup
     /// so the same scoped instance is resolved for both interfaces per request.
+    ///
+    /// Fleet integration (W7): INatsEventPublisher and INatsAgentClient are resolved
+    /// from the container if registered (call AddFleetIntegration first); otherwise null
+    /// is injected and fleet features are silently disabled.
     /// </summary>
     public static IServiceCollection AddCustomers(
         this IServiceCollection services,
@@ -24,7 +29,13 @@ public static class CustomersServiceCollectionExtensions
                      ?? connectionString;
             return new CustomerRepository(cs);
         });
-        services.AddScoped<CustomerService>();
+
+        // CustomerService receives optional fleet services — null if fleet integration is not registered.
+        services.AddScoped<CustomerService>(sp => new CustomerService(
+            sp.GetRequiredService<ICustomerRepository>(),
+            sp.GetService<INatsEventPublisher>(),
+            sp.GetService<INatsAgentClient>()));
+
         services.AddScoped<ICustomerService>(sp => sp.GetRequiredService<CustomerService>());
         services.AddScoped<ICustomerLookup>(sp => sp.GetRequiredService<CustomerService>());
         return services;

@@ -12,10 +12,14 @@ services:
       - Authentication__ClientId=${KEYCLOAK_CLIENT_ID}
       - OpenTelemetry__Endpoint=${OTEL_ENDPOINT}
       - OTEL_EXPORTER_OTLP_ENDPOINT=${OTEL_ENDPOINT} # {{TEMPLATE: OtelEndpoint}}
+      - Fleet__NatsUrl=nats://nats:4222     # {{TEMPLATE: NatsUrl}}
+      - Fleet__SourceId=exemplar-api        # {{TEMPLATE: FleetSourceId}}
     depends_on:
       postgres:
         condition: service_healthy
       keycloak:
+        condition: service_healthy
+      nats:
         condition: service_healthy
     restart: unless-stopped
 
@@ -56,6 +60,20 @@ services:
       timeout: 5s
       retries: 10
       start_period: 30s
+    restart: unless-stopped
+
+  # ── NATS ───────────────────────────────────────────────────────────────────
+  nats:
+    image: nats:latest
+    ports:
+      - "4222:4222"   # Client connections
+      - "8222:8222"   # HTTP monitoring / management
+    command: ["-js"]  # Enable JetStream
+    healthcheck:
+      test: ["CMD", "nats-server", "--signal", "ldm"]
+      interval: 5s
+      timeout: 3s
+      retries: 3
     restart: unless-stopped
 
   # ── OTEL Collector (Aspire Dashboard) ──────────────────────────────────────

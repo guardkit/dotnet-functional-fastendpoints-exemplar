@@ -28,6 +28,7 @@
     <ProjectReference Include="..\Exemplar.Core\Exemplar.Core.csproj" />
     <ProjectReference Include="..\Exemplar.Customers\Exemplar.Customers.csproj" />
     <ProjectReference Include="..\Exemplar.Addresses\Exemplar.Addresses.csproj" />
+    <ProjectReference Include="..\Exemplar.Fleet\Exemplar.Fleet.csproj" />
   </ItemGroup>
 
 </Project>

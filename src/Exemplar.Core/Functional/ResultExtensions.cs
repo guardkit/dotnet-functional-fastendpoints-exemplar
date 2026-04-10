@@ -37,4 +37,23 @@ public static class ResultExtensions
             ? Result<TNewError, TSuccess>.Success(result.Value)
             : Result<TNewError, TSuccess>.Failure(errorMapper(result.Error));
     }
+
+    /// <summary>
+    /// Runs a side-effect action on the success value without changing the result.
+    /// The action is awaited; exceptions are swallowed so that best-effort operations
+    /// (e.g. publishing a domain event) never cause the pipeline to fail.
+    /// </summary>
+    public static async Task<Result<TError, TSuccess>> TapAsync<TError, TSuccess>(
+        this Task<Result<TError, TSuccess>> resultTask,
+        Func<TSuccess, Task> action)
+        where TError : BaseError
+    {
+        var result = await resultTask;
+        if (result.IsSuccess)
+        {
+            try { await action(result.Value); }
+            catch (Exception) { /* best-effort side effect — failures do not affect the result */ }
+        }
+        return result;
+    }
 }

@@ -1,0 +1,29 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <RootNamespace>Exemplar.Fleet</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <!-- NATS client — unified package with Core NATS + JetStream -->
+    <PackageReference Include="NATS.Net" Version="2.*" />
+    <PackageReference Include="NATS.Client.Serializers.Json" Version="2.*" />
+    <!-- Microsoft.Extensions.* arrive transitively via Exemplar.Core (Serilog, FastEndpoints).
+         Only add direct references if a minimum version constraint is needed. -->
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Exemplar.Core\Exemplar.Core.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleToAttribute">
+      <_Parameter1>Exemplar.Fleet.Tests</_Parameter1>
+    </AssemblyAttribute>
+  </ItemGroup>
+
+</Project>
