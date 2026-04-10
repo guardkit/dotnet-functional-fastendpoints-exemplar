@@ -5,6 +5,6 @@ namespace Exemplar.Core.Errors;
 public abstract record BaseError(string Message)
 {
     public virtual int StatusCode => StatusCodes.Status500InternalServerError;
-    public string? ErrorCode { get; init; }
+    public virtual string? ErrorCode => null;
     public Exception? InnerException { get; init; }
 }

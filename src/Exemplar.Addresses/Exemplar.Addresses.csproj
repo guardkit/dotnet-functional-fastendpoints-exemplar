@@ -4,10 +4,18 @@
     <TargetFramework>net8.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
   </PropertyGroup>
 
   <ItemGroup>
     <FrameworkReference Include="Microsoft.AspNetCore.App" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Dapper" Version="*" />
+    <PackageReference Include="Npgsql" Version="*" />
+    <PackageReference Include="FastEndpoints" Version="*" />
+    <PackageReference Include="FluentValidation" Version="*" />
   </ItemGroup>
 
   <ItemGroup>

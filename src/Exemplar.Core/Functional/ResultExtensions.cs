@@ -21,4 +21,20 @@ public static class ResultExtensions
         var result = await resultTask;
         return await result.BindAsync(binder);
     }
+
+    /// <summary>
+    /// Transforms the error type while preserving the success value.
+    /// Used to adapt cross-BC result types (e.g. NotFoundError → CustomerNotFoundError).
+    /// </summary>
+    public static async Task<Result<TNewError, TSuccess>> MapErrorAsync<TError, TSuccess, TNewError>(
+        this Task<Result<TError, TSuccess>> resultTask,
+        Func<TError, TNewError> errorMapper)
+        where TError : BaseError
+        where TNewError : BaseError
+    {
+        var result = await resultTask;
+        return result.IsSuccess
+            ? Result<TNewError, TSuccess>.Success(result.Value)
+            : Result<TNewError, TSuccess>.Failure(errorMapper(result.Error));
+    }
 }
