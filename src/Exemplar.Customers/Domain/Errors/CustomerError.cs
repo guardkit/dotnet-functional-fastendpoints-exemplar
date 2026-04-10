@@ -1,13 +1,13 @@
 using Exemplar.Core.Errors;
 using Microsoft.AspNetCore.Http;
 
-namespace Exemplar.Customers.Domain.Errors;
+namespace Exemplar.Customers.Domain.Errors; // {{TEMPLATE: ProjectName}}.Customers.Domain.Errors
 
 /// <summary>
 /// Pattern A: enum-discriminated error with static factories.
 /// StatusCode is derived from Kind via a switch expression.
 /// </summary>
-public record CustomerError(string Message, CustomerErrorKind Kind) : BaseError(Message)
+public record CustomerError(string Message, CustomerErrorKind Kind) : BaseError(Message) // {{TEMPLATE: DomainName}}Error
 {
     public override int StatusCode => Kind switch
     {

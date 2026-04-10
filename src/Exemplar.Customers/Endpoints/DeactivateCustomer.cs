@@ -18,8 +18,8 @@ public sealed class DeactivateCustomer : Endpoint<DeactivateCustomerRequest, Cus
 
     public override void Configure()
     {
-        Put("api/v1/customers/{id}/deactivate");
-        Roles("Admin");
+        Put("api/v1/customers/{id}/deactivate"); // {{TEMPLATE: RoutePrefixes}}
+        Roles("admin"); // {{TEMPLATE: PolicyNames}}
     }
 
     public override async Task HandleAsync(DeactivateCustomerRequest req, CancellationToken ct)

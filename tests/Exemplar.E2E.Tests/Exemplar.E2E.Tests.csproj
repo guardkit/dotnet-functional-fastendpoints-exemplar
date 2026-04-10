@@ -1,0 +1,35 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <IsPackable>false</IsPackable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <!-- Keycloak realm JSON — copied to output so KeycloakFixture can mount it into the container -->
+    <Content Include="..\..\keycloak\exemplar-realm.json"
+             Link="exemplar-realm.json"
+             CopyToOutputDirectory="PreserveNewest" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="*" />
+    <PackageReference Include="xunit" Version="*" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="*" />
+    <PackageReference Include="FluentAssertions" Version="7.*" />
+    <PackageReference Include="coverlet.collector" Version="*" />
+    <PackageReference Include="Testcontainers.PostgreSql" Version="*" />
+    <PackageReference Include="Testcontainers.Keycloak" Version="*" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Testing" Version="8.*" />
+    <PackageReference Include="Dapper" Version="*" />
+    <PackageReference Include="Npgsql" Version="*" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <!-- Reference the API project so WebApplicationFactory<Program> can start the full app -->
+    <ProjectReference Include="..\..\src\Exemplar.API\Exemplar.API.csproj" />
+  </ItemGroup>
+
+</Project>

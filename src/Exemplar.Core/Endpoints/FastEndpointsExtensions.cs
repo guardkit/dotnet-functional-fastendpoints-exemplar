@@ -24,13 +24,11 @@ public static class FastEndpointsExtensions
         return services;
     }
 
-    public static WebApplication UseApiConfiguration(
-        this WebApplication app,
-        string routePrefix = "api")
+    public static WebApplication UseApiConfiguration(this WebApplication app)
     {
         app.UseFastEndpoints(config =>
         {
-            config.Endpoints.RoutePrefix = routePrefix;
+            // No RoutePrefix — endpoint routes already include the full path (e.g. "api/v1/customers").
             config.Serializer.Options.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
             config.Errors.UseProblemDetails();
         });

@@ -19,17 +19,19 @@ public static class HealthCheckExtensions
     public static WebApplication MapHealthEndpoints(this WebApplication app)
     {
         // Liveness: always 200 if the process is running
+        // AllowAnonymous() — health checks must bypass the global fallback auth policy
+        // so orchestrators (Docker, Kubernetes) can probe without credentials.
         app.MapHealthChecks("/health/live", new HealthCheckOptions
         {
             Predicate = _ => false
-        });
+        }).AllowAnonymous();
 
         // Readiness: only checks tagged as "ready"
         app.MapHealthChecks("/health/ready", new HealthCheckOptions
         {
             Predicate = check => check.Tags.Contains("ready"),
             ResponseWriter = WriteHealthResponse
-        });
+        }).AllowAnonymous();
 
         return app;
     }

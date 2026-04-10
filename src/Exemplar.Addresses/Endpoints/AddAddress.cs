@@ -49,8 +49,8 @@ public sealed class AddAddress : Endpoint<AddAddressEndpointRequest, AddressDto>
 
     public override void Configure()
     {
-        Post("api/v1/customers/{id}/addresses");
-        Roles("User", "Admin");
+        Post("api/v1/customers/{id}/addresses"); // {{TEMPLATE: RoutePrefixes}}
+        Roles("user", "admin"); // {{TEMPLATE: PolicyNames}}
     }
 
     public override async Task HandleAsync(AddAddressEndpointRequest req, CancellationToken ct)

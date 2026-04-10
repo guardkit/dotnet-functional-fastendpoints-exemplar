@@ -58,10 +58,16 @@ public static class AuthenticationExtensions
     public static IServiceCollection AddAuthorizationPolicies(
         this IServiceCollection services)
     {
+        // {{TEMPLATE: PolicyNames}} — define authorization policies matching Keycloak role names
         services.AddAuthorizationBuilder()
             .AddPolicy("AdminOnly",              p => p.RequireRole("admin"))
             .AddPolicy("UserOrAdmin",            p => p.RequireRole("user", "admin"))
-            .AddPolicy("RequireAuthentication",  p => p.RequireAuthenticatedUser());
+            .AddPolicy("RequireAuthentication",  p => p.RequireAuthenticatedUser())
+            // Fallback: any endpoint without explicit Roles() or AllowAnonymous() requires auth.
+            // Health check and Swagger endpoints must explicitly call .AllowAnonymous().
+            .SetFallbackPolicy(new Microsoft.AspNetCore.Authorization.AuthorizationPolicyBuilder()
+                .RequireAuthenticatedUser()
+                .Build());
 
         return services;
     }
@@ -80,10 +86,12 @@ public static class AuthenticationExtensions
         if (identity is null)
             return Task.CompletedTask;
 
-        // Read the raw JWT payload
+        // Read the raw JWT payload — JWT uses base64url encoding; convert to standard base64 first.
         var payload = ctx.SecurityToken.UnsafeToString();
-        using var doc = JsonDocument.Parse(
-            Convert.FromBase64String(PadBase64(payload.Split('.')[1])));
+        var base64Payload = PadBase64(payload.Split('.')[1])
+            .Replace('-', '+')
+            .Replace('_', '/');
+        using var doc = JsonDocument.Parse(Convert.FromBase64String(base64Payload));
 
         var root = doc.RootElement;
 

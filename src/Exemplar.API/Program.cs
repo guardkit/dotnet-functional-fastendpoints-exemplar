@@ -1,3 +1,4 @@
+// {{TEMPLATE: ProjectName}} — replace all "Exemplar" namespace prefixes throughout the solution.
 using Exemplar.Addresses.Endpoints;
 using Exemplar.Addresses.Infrastructure;
 using Exemplar.API.Authentication;
@@ -55,3 +56,7 @@ app.UseApiConfiguration();      // FastEndpoints + Swagger
 app.MapHealthEndpoints();       // /health/live  and  /health/ready
 
 app.Run();
+
+// Required so WebApplicationFactory<Program> can reference this type from test assemblies.
+// The top-level-statement compiler generates an internal partial Program class; this makes it public.
+public partial class Program { }

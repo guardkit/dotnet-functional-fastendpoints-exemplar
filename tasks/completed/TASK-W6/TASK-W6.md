@@ -1,11 +1,13 @@
 ---
 id: TASK-W6
 title: "Integration Tests + Polish — TestContainers Keycloak, E2E, template annotations, README"
-status: backlog
+status: completed
 task_type: feature
 wave: 6
 created: 2026-04-10T00:00:00Z
-updated: 2026-04-10T00:00:00Z
+updated: 2026-04-10T12:00:00Z
+completed: 2026-04-10T12:00:00Z
+completed_location: tasks/completed/TASK-W6/
 priority: high
 complexity: 6
 parent_review: TASK-59B3

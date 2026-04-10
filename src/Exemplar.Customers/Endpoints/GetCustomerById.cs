@@ -18,7 +18,7 @@ public sealed class GetCustomerById : Endpoint<GetCustomerByIdRequest, CustomerD
 
     public override void Configure()
     {
-        Get("api/v1/customers/{id}");
+        Get("api/v1/customers/{id}"); // {{TEMPLATE: RoutePrefixes}} / {{TEMPLATE: ApiVersion}}
         // No AllowAnonymous() — the global default policy (RequireAuthenticatedUser) enforces auth.
     }
 

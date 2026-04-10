@@ -1,7 +1,7 @@
 services:
 
   # ── API ────────────────────────────────────────────────────────────────────
-  api:
+  api: # {{TEMPLATE: ServiceName}}
     build: .
     ports:
       - "5000:8080"
@@ -11,7 +11,7 @@ services:
       - Authentication__Audience=${KEYCLOAK_CLIENT_ID}
       - Authentication__ClientId=${KEYCLOAK_CLIENT_ID}
       - OpenTelemetry__Endpoint=${OTEL_ENDPOINT}
-      - OTEL_EXPORTER_OTLP_ENDPOINT=${OTEL_ENDPOINT}
+      - OTEL_EXPORTER_OTLP_ENDPOINT=${OTEL_ENDPOINT} # {{TEMPLATE: OtelEndpoint}}
     depends_on:
       postgres:
         condition: service_healthy
@@ -51,7 +51,7 @@ services:
     healthcheck:
       test:
         - "CMD-SHELL"
-        - "curl -sf http://localhost:8080/realms/exemplar/.well-known/openid-configuration || exit 1"
+        - "curl -sf http://localhost:8080/realms/exemplar/.well-known/openid-configuration || exit 1" # {{TEMPLATE: KeycloakRealm}}
       interval: 10s
       timeout: 5s
       retries: 10

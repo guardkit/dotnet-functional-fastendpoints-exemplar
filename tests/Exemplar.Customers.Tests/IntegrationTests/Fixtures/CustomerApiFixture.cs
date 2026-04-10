@@ -34,11 +34,10 @@ public sealed class CustomerApiFixture : IAsyncDisposable
                     app.UseRouting();
                     app.UseAuthentication();
                     app.UseAuthorization();
-                    app.UseFastEndpoints(c =>
+                    app.UseEndpoints(e => e.MapFastEndpoints(c =>
                     {
-                        c.Endpoints.RoutePrefix = string.Empty;
                         c.Errors.UseProblemDetails();
-                    });
+                    }));
                 });
                 web.ConfigureServices(services =>
                 {
@@ -87,7 +86,7 @@ public sealed class FakeAuthHandler : AuthenticationHandler<AuthenticationScheme
         {
             new Claim(ClaimTypes.Name, "testuser"),
             new Claim(ClaimTypes.NameIdentifier, Guid.NewGuid().ToString()),
-            new Claim(ClaimTypes.Role, "Admin")
+            new Claim(ClaimTypes.Role, "admin") // lowercase — match Keycloak realm role names
         };
         var identity = new ClaimsIdentity(claims, SchemeName);
         var principal = new ClaimsPrincipal(identity);

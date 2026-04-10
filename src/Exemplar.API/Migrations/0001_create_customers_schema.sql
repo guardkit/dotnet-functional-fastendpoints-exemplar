@@ -1,3 +1,3 @@
--- Migration 0001: Create the customers schema namespace.
+-- Migration 0001: Create the customers schema namespace. -- {{TEMPLATE: MigrationOrder}}
 -- The customers bounded context owns all objects created within this schema.
 CREATE SCHEMA IF NOT EXISTS customers;

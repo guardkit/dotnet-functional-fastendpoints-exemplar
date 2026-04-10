@@ -14,8 +14,8 @@ public sealed class CreateCustomer : Endpoint<CreateCustomerRequest, CustomerDto
 
     public override void Configure()
     {
-        Post("api/v1/customers");
-        Roles("Admin");
+        Post("api/v1/customers"); // {{TEMPLATE: RoutePrefixes}}
+        Roles("admin"); // {{TEMPLATE: PolicyNames}} — match Keycloak realm role names (lowercase)
     }
 
     public override async Task HandleAsync(CreateCustomerRequest req, CancellationToken ct)

@@ -4,6 +4,7 @@ using FluentAssertions;
 using Microsoft.AspNetCore.Http;
 using System.Net;
 using System.Net.Http.Json;
+using System.Text;
 using Xunit;
 
 namespace Exemplar.Customers.Tests.IntegrationTests;
@@ -109,7 +110,7 @@ public sealed class CustomerEndpointsTests : IAsyncLifetime
         var created = await CreateCustomerAsync("Grace", "grace@example.com");
 
         var response = await _api.Client.PutAsync(
-            $"api/v1/customers/{created.Id}/deactivate", null);
+            $"api/v1/customers/{created.Id}/deactivate", new StringContent("{}", Encoding.UTF8, "application/json"));
 
         response.StatusCode.Should().Be(HttpStatusCode.OK);
         var dto = await response.Content.ReadFromJsonAsync<CustomerDto>();
@@ -120,10 +121,10 @@ public sealed class CustomerEndpointsTests : IAsyncLifetime
     public async Task DeactivateCustomer_WhenAlreadyInactive_Returns409()
     {
         var created = await CreateCustomerAsync("Henry", "henry@example.com");
-        await _api.Client.PutAsync($"api/v1/customers/{created.Id}/deactivate", null);
+        await _api.Client.PutAsync($"api/v1/customers/{created.Id}/deactivate", new StringContent("{}", Encoding.UTF8, "application/json"));
 
         var response = await _api.Client.PutAsync(
-            $"api/v1/customers/{created.Id}/deactivate", null);
+            $"api/v1/customers/{created.Id}/deactivate", new StringContent("{}", Encoding.UTF8, "application/json"));
 
         response.StatusCode.Should().Be(HttpStatusCode.Conflict);
     }
@@ -132,7 +133,7 @@ public sealed class CustomerEndpointsTests : IAsyncLifetime
     public async Task DeactivateCustomer_WhenNotFound_Returns404()
     {
         var response = await _api.Client.PutAsync(
-            $"api/v1/customers/{Guid.NewGuid()}/deactivate", null);
+            $"api/v1/customers/{Guid.NewGuid()}/deactivate", new StringContent("{}", Encoding.UTF8, "application/json"));
 
         response.StatusCode.Should().Be(HttpStatusCode.NotFound);
     }
