@@ -4,10 +4,25 @@
     <TargetFramework>net8.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <RootNamespace>Exemplar.API</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>
+    <!-- Authentication — pinned to 8.x to stay on net8.0 framework -->
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="8.*" />
+
+    <!-- Database migrations -->
+    <PackageReference Include="dbup-postgresql" Version="*" />
+
+    <!-- Health checks -->
+    <PackageReference Include="AspNetCore.HealthChecks.Npgsql" Version="*" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\Exemplar.Core\Exemplar.Core.csproj" />
+    <ProjectReference Include="..\Exemplar.Customers\Exemplar.Customers.csproj" />
+    <ProjectReference Include="..\Exemplar.Addresses\Exemplar.Addresses.csproj" />
   </ItemGroup>
 
 </Project>
