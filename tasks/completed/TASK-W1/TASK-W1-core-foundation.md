@@ -1,17 +1,26 @@
 ---
 id: TASK-W1
 title: "Core Foundation — Result wrapper, BaseError, endpoint extensions, OTEL/Serilog"
-status: backlog
+status: completed
 task_type: feature
 wave: 1
 created: 2026-04-10T00:00:00Z
-updated: 2026-04-10T00:00:00Z
+updated: 2026-04-10T12:00:00Z
+completed: 2026-04-10T12:00:00Z
 priority: high
 complexity: 5
 parent_review: TASK-59B3
 feature_id: dotnet-fastendpoints-exemplar
 dependencies: []
 tags: [dotnet, fastendpoints, csharpfunctionalextensions, core]
+previous_state: backlog
+state_transition_reason: "Automatic transition for task-work execution"
+completed_location: tasks/completed/TASK-W1/
+quality_gates:
+  build: passed
+  tests: "14/14"
+  warnings: 0
+  errors: 0
 ---
 
 # TASK-W1: Core Foundation
@@ -113,10 +122,10 @@ else
 
 ## Quality Gates
 
-- [ ] `dotnet build` — zero warnings, zero errors
-- [ ] `dotnet test Exemplar.Core.Tests` — 100% pass
-- [ ] Result wrapper: Success path, Failure path, Bind short-circuits on failure, Map transforms success, implicit conversions work
-- [ ] No reference to CSharpFunctionalExtensions in any project other than `Exemplar.Core`
+- [x] `dotnet build` — zero warnings, zero errors
+- [x] `dotnet test Exemplar.Core.Tests` — 14/14 pass
+- [x] Result wrapper: Success path, Failure path, Bind short-circuits on failure, Map transforms success, implicit conversions work
+- [x] No reference to CSharpFunctionalExtensions in any project other than `Exemplar.Core`
 
 ## Next Wave
 

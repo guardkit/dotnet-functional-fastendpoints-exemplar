@@ -1,0 +1,18 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <FrameworkReference Include="Microsoft.AspNetCore.App" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Exemplar.Core\Exemplar.Core.csproj" />
+    <ProjectReference Include="..\Exemplar.Customers.Contracts\Exemplar.Customers.Contracts.csproj" />
+  </ItemGroup>
+
+</Project>

@@ -1,6 +1,6 @@
 # Feature: .NET FastEndpoints Functional Exemplar
 
-**Status**: Backlog  
+**Status**: In Progress (Wave 1/7 complete)  
 **Parent review**: [TASK-59B3 review report](../../../.claude/reviews/TASK-59B3-review-report.md)
 
 ## Problem Statement
@@ -25,7 +25,7 @@ Build a minimal but complete `.NET 8` solution using two generic bounded context
 
 | Wave | Task | Status |
 |------|------|--------|
-| 1 | [TASK-W1 — Core Foundation](TASK-W1-core-foundation.md) | Backlog |
+| 1 | TASK-W1 — Core Foundation | ✅ Completed |
 | 2 | [TASK-W2 — Customers BC](TASK-W2-customers-bc.md) | Backlog |
 | 3 | [TASK-W3 — Addresses BC](TASK-W3-addresses-bc.md) | Backlog |
 | 4 | [TASK-W4 — API Host + Auth](TASK-W4-api-host.md) | Backlog |
