@@ -69,10 +69,9 @@ Upgrade steps:
 | Exemplar.Core.Tests | ✅ Passed | 14/14 |
 | Exemplar.Addresses.Tests | ✅ Passed | 15/15 |
 | Exemplar.Customers.Tests | ✅ Passed | 20/20 |
-| Exemplar.Fleet.Tests (unit) | ✅ Passed | 32/32 |
+| Exemplar.Fleet.Tests | ✅ Passed | 37/37 |
 | Exemplar.E2E.Tests | skipped (requires live infra) | — |
 
-Note: Fleet.Tests integration tests (NatsContainerFixture) are blocked by a pre-existing
-Testcontainers readiness-check incompatibility with the scratch-based `nats:latest` image
-(no `/bin/sh` in container). This is unrelated to the .NET upgrade — the same failure
-occurs on the `main` branch before this change.
+Also fixed a pre-existing bug in `NatsIntegrationTests.cs`: `UntilInternalTcpPortIsAvailable(4222)`
+executes `/bin/sh` inside the container, but `nats:latest` is a scratch image with no shell.
+Replaced with `UntilMessageIsLogged("Server is ready")` which reads stdout instead.

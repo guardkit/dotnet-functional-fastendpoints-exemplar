@@ -2,7 +2,7 @@
 
 **Parent review**: TASK-59B3  
 **Report**: `.claude/reviews/TASK-59B3-review-report.md`  
-**Goal**: Working .NET 8 solution → input to `/template-create` → GuardKit `dotnet-fastendpoints` built-in template
+**Goal**: Working .NET 10 solution → input to `/template-create` → GuardKit `dotnet-fastendpoints` built-in template
 
 ---
 

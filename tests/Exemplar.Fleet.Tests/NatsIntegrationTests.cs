@@ -31,7 +31,7 @@ public sealed class NatsIntegrationTests : IAsyncLifetime
         _natsContainer = new ContainerBuilder(new DockerImage("nats:latest"))
             .WithCommand("-js")
             .WithPortBinding(4222, assignRandomHostPort: true)
-            .WithWaitStrategy(Wait.ForUnixContainer().UntilInternalTcpPortIsAvailable(4222))
+            .WithWaitStrategy(Wait.ForUnixContainer().UntilMessageIsLogged("Server is ready"))
             .Build();
     }
 

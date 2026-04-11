@@ -9,7 +9,7 @@ The GuardKit `dotnet-fastendpoints` built-in template does not yet exist. To gen
 
 ## Solution
 
-Build a minimal but complete `.NET 8` solution using two generic bounded contexts (Customers + Addresses) that together demonstrate every pattern the template must include:
+Build a minimal but complete `.NET 10` solution using two generic bounded contexts (Customers + Addresses) that together demonstrate every pattern the template must include:
 
 - `Result<TError, TSuccess>` wrapper over CSharpFunctionalExtensions (error-first ordering)
 - `BaseError` abstract record hierarchy with two error styles (enum-discriminated + simple records)

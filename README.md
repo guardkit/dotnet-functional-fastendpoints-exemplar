@@ -14,7 +14,7 @@ automatically.
 
 ## Prerequisites
 
-- [.NET 8 SDK](https://dotnet.microsoft.com/download)
+- [.NET 10 SDK](https://dotnet.microsoft.com/download)
 - [Docker + Docker Compose](https://docs.docker.com/get-docker/)
 
 ---
