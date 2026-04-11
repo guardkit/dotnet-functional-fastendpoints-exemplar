@@ -1,10 +1,11 @@
 ---
 id: TASK-A1C4
 title: Upgrade project from .NET 8 to .NET 10 LTS
-status: in_review
+status: completed
 task_type: feature
 created: 2026-04-10T00:00:00Z
-updated: 2026-04-10T14:00:00Z
+updated: 2026-04-11T00:00:00Z
+completed: 2026-04-11T00:00:00Z
 priority: normal
 tags: [dotnet, upgrade, lts, dependencies]
 complexity: 3
